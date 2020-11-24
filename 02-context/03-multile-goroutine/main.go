@@ -31,7 +31,7 @@ func worker(ctx context.Context, name string, data <-chan int) {
 		select {
 		case c := <-data:
 			if ctx.Err() != nil {
-				fmt.Println(name, "stop to handle data")
+				fmt.Println(name, "stop to handle data:", ctx.Err().Error())
 				return
 			}
 			fmt.Println(name, "got data value", c)
