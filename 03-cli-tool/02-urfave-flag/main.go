@@ -10,6 +10,7 @@ import (
 
 type Server struct {
 	Language string
+	Debug    bool
 }
 
 func main() {
@@ -24,6 +25,12 @@ func main() {
 				Usage:       "language for the greeting",
 				Destination: &cfg.Language,
 			},
+			&cli.BoolFlag{
+				Name:        "debug",
+				Value:       false,
+				Usage:       "debug mode",
+				Destination: &cfg.Debug,
+			},
 		},
 		Action: func(c *cli.Context) error {
 			fmt.Println("Hello friend!")
@@ -33,6 +40,7 @@ func main() {
 				fmt.Println("Hello foobar")
 			}
 			fmt.Println(cfg.Language)
+			fmt.Println(cfg.Debug)
 			return nil
 		},
 	}
