@@ -54,14 +54,14 @@ func (c Consumer) startConsumer(ctx context.Context) {
 	for {
 		select {
 		case job := <-c.inputChan:
+			if ctx.Err() != nil {
+				close(c.jobsChan)
+				return
+			}
 			select {
 			case c.jobsChan <- job:
 			default:
 				log.Println("job channel has been closed. num:", job)
-			}
-			if ctx.Err() != nil {
-				close(c.jobsChan)
-				return
 			}
 		case <-ctx.Done():
 			close(c.jobsChan)
