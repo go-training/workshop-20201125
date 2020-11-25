@@ -57,7 +57,7 @@ func helper(ctx context.Context) <-chan *callResponse {
 func getHTTPResponse(ctx context.Context) (*response, error) {
 	select {
 	case <-ctx.Done():
-		return nil, fmt.Errorf("context timeout, ran out of time")
+		return nil, fmt.Errorf("context timeout, ran out of time: %v", ctx.Err())
 	case respChan := <-helper(ctx):
 		return respChan.Resp, respChan.Err
 
@@ -65,7 +65,7 @@ func getHTTPResponse(ctx context.Context) (*response, error) {
 }
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	res, err := getHTTPResponse(ctx)
 
