@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
-	_ "github.com/joho/godotenv/autoload"
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -32,5 +31,5 @@ func main() {
 	if err != nil {
 		log.Fatal("invalid configuration")
 	}
-	fmt.Println(cfg)
+	fmt.Printf("%#v", cfg)
 }
